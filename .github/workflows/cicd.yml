@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: CI/CD Pipeline for HTML and CSS Project
 
 on:
   push:
@@ -12,33 +12,25 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
-
-      - name: Install Dependencies
+      - name: Validate HTML and CSS files (optional)
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Run Tests
-        run: |
-          pytest
+          # Install HTML and CSS validators (optional)
+          sudo apt-get install -y tidy
+          tidy -e index.html
+          # You can add more files to validate, like CSS files, etc.
 
   deploy:
     runs-on: ubuntu-latest
     needs: build
     if: success()
     steps:
-      - name: Checkout Code
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Deploy to Production
+      - name: Deploy to GitHub Pages (or custom server)
         run: |
-          echo "Deploying to Production Server"
-          # Replace the following with the actual deployment script
-          ./deploy.sh
+          echo "Deploying to GitHub Pages or custom server"
+          # For GitHub Pages, you can use the following command to push the files
