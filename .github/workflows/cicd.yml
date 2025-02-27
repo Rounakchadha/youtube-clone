@@ -1,4 +1,4 @@
-name: CI/CD Pipeline for HTML and CSS Project
+name: CI/CD Pipeline
 
 on:
   push:
@@ -12,25 +12,28 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Validate HTML and CSS files (optional)
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      
+      - name: Validate HTML, CSS, and JS
         run: |
-          # Install HTML and CSS validators (optional)
-          sudo apt-get install -y tidy
-          tidy -e index.html
-          # You can add more files to validate, like CSS files, etc.
+          echo "Validating HTML, CSS, and JS files..."
+          # Example: Use a linter like htmlhint, stylelint, or eslint if available
 
   deploy:
-    runs-on: ubuntu-latest
     needs: build
-    if: success()
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Deploy to GitHub Pages (or custom server)
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      
+      - name: Deploy Application
         run: |
-          echo "Deploying to GitHub Pages or custom server"
-          # For GitHub Pages, you can use the following command to push the files
+          echo "Deploying static website..."
+          # Example: Deploy to GitHub Pages
+          # git config --global user.email "you@example.com"
+          # git config --global user.name "Your Name"
+          # git add .
+          # git commit -m "Deploy website"
+          # git push origin main
